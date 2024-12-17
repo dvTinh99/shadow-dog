@@ -8,7 +8,9 @@ export const state = {
     JUMPING_LEFT: 6,
     JUMPING_RIGHT: 7,
     FALLING_LEFT:8,
-    FALLING_RIGHT:9
+    FALLING_RIGHT:9,
+    ATTACK_LEFT: 10,
+    ATTACK_RIGHT: 11
 }
 
 class State {
@@ -174,6 +176,8 @@ export class JumpingLeft extends State {
             this.player.setState(state.STANDING_LEFT)
         } else if (this.player.vy > 0) {
             this.player.setState(state.FALLING_LEFT)
+        } else if (input === 'PRESS DOWN') {
+            this.player.setState(state.ATTACK_LEFT)
         }
     }
 }
@@ -196,6 +200,8 @@ export class JumpingRight extends State {
             this.player.setState(state.STANDING_RIGHT)
         } else if (this.player.vy > 0) {
             this.player.setState(state.FALLING_RIGHT)
+        } else if (input === 'PRESS DOWN') {
+            this.player.setState(state.ATTACK_RIGHT)
         }
     }
 }
@@ -212,7 +218,10 @@ export class FallingLeft extends State {
     handleInput(input) {
         if(input === 'PRESS RIGHT') {
             this.player.setState(state.FALLING_RIGHT);
-        } else if (this.player.onGround()) {
+        } else if (input === 'PRESS DOWN') {
+            this.player.setState(state.ATTACK_LEFT)
+        }
+        else if (this.player.onGround()) {
             this.player.setState(state.STANDING_LEFT)
         }
     }
@@ -231,7 +240,53 @@ export class FallingRight extends State {
     handleInput(input) {
         if(input === 'PRESS LEFT') {
             this.player.setState(state.FALLING_LEFT);
+        } else if (input == 'PRESS DOWN') {
+            this.player.setState(state.ATTACK_RIGHT)
         } else if (this.player.onGround()) {
+            this.player.setState(state.STANDING_RIGHT)
+        }
+    }
+}
+
+export class AttackLeft extends State {
+    constructor(player) {
+        super('ATTACK RIGHT')
+        this.player = player
+    }
+
+    enter() {
+        this.player.frameY = 11
+        this.player.maxFrame = 6
+        this.player.weight = 5
+    }
+
+    handleInput(input) {
+        if(input === 'PRESS LEFT') {
+            this.player.setState(state.FALLING_LEFT);
+        } else if (this.player.onGround()) {
+            this.player.weight = 0.5
+            this.player.setState(state.STANDING_RIGHT)
+        }
+    }
+}
+
+export class AttackRight extends State {
+    constructor(player) {
+        super('ATTACK RIGHT')
+        this.player = player
+    }
+
+    enter() {
+        this.player.frameY = 10
+        this.player.maxFrame = 6
+        this.player.weight = 5
+    }
+
+    handleInput(input) {
+        if(input === 'PRESS LEFT') {
+            this.player.setState(state.FALLING_LEFT);
+        } else if (this.player.onGround()) {
+            this.player.weight = 0.5
             this.player.setState(state.STANDING_RIGHT)
         }
     }

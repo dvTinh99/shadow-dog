@@ -8,12 +8,16 @@ import {
     JumpingLeft,
     JumpingRight,
     FallingLeft,
-    FallingRight
+    FallingRight,
+    AttackLeft,
+    AttackRight
 } from './state.js'
 export default class Player {
-    constructor(gameWidth, gameHeight) {
-        this.gameWidth = gameWidth
-        this.gameHeight = gameHeight
+    constructor(game) {
+        this.game = game
+
+        this.gameWidth = this.game.width
+        this.gameHeight = this.game.height
         this.state = [
             new StandingLeft(this), 
             new StandingRight(this),
@@ -24,16 +28,18 @@ export default class Player {
             new JumpingLeft(this),
             new JumpingRight(this),
             new FallingLeft(this),
-            new FallingRight(this)
+            new FallingRight(this),
+            new AttackLeft(this),
+            new AttackRight(this)
         ]
         this.currentState = this.state[1]
 
-        this.image = document.getElementById('dogImage')
+        this.image = document.getElementById('player')
         this.width = 200
         this.height = 181.83
 
-        this.x = this.gameWidth/2 - this.width/2;
-        this.y = this.gameHeight - this.height;
+        this.x = 0;
+        this.y = this.gameHeight - (this.height / 2) - this.game.GroundMargin;
 
         this.frameX = 0
         this.frameY = 0
@@ -49,28 +55,29 @@ export default class Player {
         this.frameTimer = 0
         this.frameInterval = 1000/this.fps
     }
-    draw(context, deltaTime) {
-        if (this.frameTimer > this.frameInterval) {
+    draw(context) {
+        context.drawImage(this.image,
+            this.width * this.frameX, this.height * this.frameY, this.width, this.height,
+            this.x, this.y, this.width / 2, this.height /2);
+    }
 
+    update(input, deltaTime) {
+        if (this.frameTimer > this.frameInterval) {
             if (this.frameX < this.maxFrame) this.frameX ++
             else this.frameX = 0
-
             this.frameTimer = 0
         } else {
             this.frameTimer += deltaTime
         }
-        context.drawImage(this.image,
-            this.width * this.frameX, this.height * this.frameY, this.width, this.height,
-            this.x, this.y, this.width, this.height);
-    }
 
-    update(input) {
+
         this.currentState.handleInput(input)
         this.x += this.speed
+        
 
         if (this.x <=0 ) this.x = 0
-        else if (this.x >= this.gameWidth - this.width) {
-            this.x = this.gameWidth - this.width
+        else if (this.x >= this.gameWidth - (this.width/2)) {
+            this.x = this.gameWidth - (this.width/2)
         }
 
         // vertical movement
@@ -81,18 +88,19 @@ export default class Player {
             this.vy = 0
         }
 
-        if(this.y > this.gameHeight - this.height) {
-            this.y = this.gameHeight - this.height
+        if(this.y > this.gameHeight - (this.height / 2)) {
+            this.y = this.gameHeight - (this.height / 2)
         }
     }
 
-    setState(state) {
+    setState(state, speed = 0) {
         this.currentState = this.state[state]
+        this.game.speed = speed
         this.currentState.enter()
     }
 
     onGround() {
-        return this.y >= this.gameHeight - this.height
+        return this.y >= this.gameHeight - (this.height / 2) - this.game.GroundMargin
     }
 
 }
