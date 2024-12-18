@@ -33,13 +33,13 @@ export class StandingLeft extends State {
 
     handleInput(input) {
         if (input === 'PRESS RIGHT') {
-            this.player.setState(state.RUNNING_RIGHT);
+            this.player.setState(state.RUNNING_RIGHT, 1);
         } else if (input === 'PRESS DOWN') {
-            this.player.setState(state.SITTING_LEFT)
+            this.player.setState(state.SITTING_LEFT, 1)
         } else if (input === 'PRESS LEFT') {
-            this.player.setState(state.RUNNING_LEFT)
+            this.player.setState(state.RUNNING_LEFT, 1)
         } else if (input === 'PRESS UP') {
-            this.player.setState(state.JUMPING_LEFT)
+            this.player.setState(state.JUMPING_LEFT, 1)
         } 
     }
 }
@@ -58,11 +58,11 @@ export class StandingRight extends State {
 
     handleInput(input) {
         if(input === 'PRESS LEFT') {
-            this.player.setState(state.RUNNING_LEFT);
+            this.player.setState(state.RUNNING_LEFT, 1);
         } else if (input === 'PRESS DOWN') {
             this.player.setState(state.SITTING_RIGHT)
         } else if (input === 'PRESS RIGHT') {
-            this.player.setState(state.RUNNING_RIGHT)
+            this.player.setState(state.RUNNING_RIGHT, 1)
         } else if (input === 'PRESS UP') {
             this.player.setState(state.JUMPING_RIGHT)
         }
@@ -125,7 +125,7 @@ export class RunningLeft extends State {
 
     handleInput(input) {
         if(input === 'PRESS RIGHT') {
-            this.player.setState(state.RUNNING_RIGHT);
+            this.player.setState(state.RUNNING_RIGHT, 1);
         } else if (input === 'RELEASE LEFT') {
             this.player.setState(state.STANDING_LEFT)
         } else if (input === 'PRESS DOWN') {
@@ -148,7 +148,7 @@ export class RunningRight extends State {
 
     handleInput(input) {
         if(input === 'PRESS LEFT') {
-            this.player.setState(state.RUNNING_LEFT);
+            this.player.setState(state.RUNNING_LEFT, 1);
         } else if (input === 'RELEASE RIGHT') {
             this.player.setState(state.STANDING_RIGHT)
         } else if (input === 'PRESS DOWN') {
@@ -171,7 +171,7 @@ export class JumpingLeft extends State {
 
     handleInput(input) {
         if(input === 'PRESS RIGHT') {
-            this.player.setState(state.JUMPING_RIGHT);
+            this.player.setState(state.JUMPING_RIGHT, 1);
         } else if (this.player.onGround()) {
             this.player.setState(state.STANDING_LEFT)
         } else if (this.player.vy > 0) {
@@ -195,7 +195,7 @@ export class JumpingRight extends State {
 
     handleInput(input) {
         if(input === 'PRESS LEFT') {
-            this.player.setState(state.JUMPING_LEFT);
+            this.player.setState(state.JUMPING_LEFT, 1);
         } else if (this.player.onGround()) {
             this.player.setState(state.STANDING_RIGHT)
         } else if (this.player.vy > 0) {

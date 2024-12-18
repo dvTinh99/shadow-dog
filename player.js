@@ -95,7 +95,7 @@ export default class Player {
 
     setState(state, speed = 0) {
         this.currentState = this.state[state]
-        this.game.speed = speed
+        this.game.speed = this.game.maxSpeed * speed
         this.currentState.enter()
     }
 
