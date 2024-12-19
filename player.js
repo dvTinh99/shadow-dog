@@ -13,7 +13,7 @@ import {
     AttackRight
 } from './state.js'
 export default class Player {
-    constructor(game) {
+    constructor(game, player, x = 0, y = 0) {
         this.game = game
 
         this.gameWidth = this.game.width
@@ -34,12 +34,12 @@ export default class Player {
         ]
         this.currentState = this.state[1]
 
-        this.image = document.getElementById('player')
-        this.width = 200
-        this.height = 181.83
+        this.image = player
+        this.width = 130
+        this.height = 200
 
-        this.x = 0;
-        this.y = this.gameHeight - (this.height / 2) - this.game.GroundMargin;
+        this.x = x;
+        this.y = y == 0 ? this.gameHeight - (this.height ) - this.game.GroundMargin : y;
 
         this.frameX = 0
         this.frameY = 0
@@ -58,7 +58,7 @@ export default class Player {
     draw(context) {
         context.drawImage(this.image,
             this.width * this.frameX, this.height * this.frameY, this.width, this.height,
-            this.x, this.y, this.width / 2, this.height /2);
+            this.x, this.y, this.width , this.height );
     }
 
     update(input, deltaTime) {
@@ -76,21 +76,21 @@ export default class Player {
         
 
         if (this.x <=0 ) this.x = 0
-        else if (this.x >= this.gameWidth - (this.width/2)) {
-            this.x = this.gameWidth - (this.width/2)
+        else if (this.x >= this.gameWidth - (this.width)) {
+            this.x = this.gameWidth - (this.width)
         }
 
         // vertical movement
         this.y += this.vy
-        if(!this.onGround()) {
-            this.vy += this.weight
-        } else {
-            this.vy = 0
-        }
+        // if(!this.onGround()) {
+        //     this.vy += this.weight
+        // } else {
+        //     this.vy = 0
+        // }
 
-        if(this.y > this.gameHeight - (this.height / 2)) {
-            this.y = this.gameHeight - (this.height / 2)
-        }
+        // if(this.y > this.gameHeight - (this.height )) {
+        //     this.y = this.gameHeight - (this.height )
+        // }
     }
 
     setState(state, speed = 0) {
@@ -100,7 +100,7 @@ export default class Player {
     }
 
     onGround() {
-        return this.y >= this.gameHeight - (this.height / 2) - this.game.GroundMargin
+        return this.y >= this.gameHeight - (this.height ) - this.game.GroundMargin
     }
 
 }

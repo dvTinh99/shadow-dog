@@ -23,7 +23,7 @@ class Layer {
 export class Background {
     constructor(game) {
         this.game = game
-        this.width = 1667
+        this.width = 384
         this.height = 500
         this.layer1Image = layer1
         this.layer2Image = layer2
@@ -32,16 +32,16 @@ export class Background {
         this.layer5Image = layer5
         
         this.layer1 = new Layer(this.game, this.width, this.height, 0, this.layer1Image)
-        this.layer2 = new Layer(this.game, this.width, this.height, 0.2, this.layer2Image)
-        this.layer3 = new Layer(this.game, this.width, this.height, 0.4, this.layer3Image)
-        this.layer4 = new Layer(this.game, this.width, this.height, 0.8, this.layer4Image)
-        this.layer5 = new Layer(this.game, this.width, this.height, 1, this.layer5Image)
+        // this.layer2 = new Layer(this.game, this.width, this.height, 0.2, this.layer2Image)
+        // this.layer3 = new Layer(this.game, this.width, this.height, 0.4, this.layer3Image)
+        // this.layer4 = new Layer(this.game, this.width, this.height, 0.8, this.layer4Image)
+        // this.layer5 = new Layer(this.game, this.width, this.height, 1, this.layer5Image)
         this.backgroundLayers = [
             this.layer1, 
-            this.layer2, 
-            this.layer3,
-            this.layer4,
-            this.layer5
+            // this.layer2, 
+            // this.layer3,
+            // this.layer4,
+            // this.layer5
         ]
     }
 
