@@ -15,6 +15,7 @@ export default class App {
     betting : any = undefined
     racing : any = undefined
     rewarding : any = undefined
+    winInThisGame : number = undefined
 
     player : IPlayer[] = [{id:1, percent : 0, name : "1"},{id:2, percent : 0, name : "2"},{id:3, percent : 0, name : "3"},{id:4, percent : 0, name : "4"}]
     pot : number[] = [0,0,0,0]
@@ -36,6 +37,7 @@ export default class App {
 
     race() {
         clearInterval(this.betting);
+        this.winInThisGame = this.getWinner()
 
         // will set percent complete
         console.log('racing');
@@ -45,8 +47,13 @@ export default class App {
         this.racing = setInterval(() => {
             this.player.forEach(player => {
                 if (player.percent < 100) {
+                    if (this.winInThisGame != player.id && player.percent > 70 && this.player[this.winInThisGame - 1].percent != 100) {
+                        player.percent += ((100 - player.percent) * Math.floor(getRandomArbitrary(10,20))) / 100
+                    } else {
 
-                    player.percent += Math.floor(getRandomArbitrary(10,20))
+                        player.percent += Math.floor(getRandomArbitrary(10,20))
+                    }
+
                     if (player.percent > 100) {
                         player.percent = 100
                         if (playerWon === undefined) {
@@ -90,5 +97,9 @@ export default class App {
 
     setBet(playerId : number, amount : number) {
         this.pot[this.player.findIndex(player => player.id === playerId)] += amount
+    }
+
+    getWinner() : number {
+        return 2
     }
 }
