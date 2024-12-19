@@ -1,8 +1,9 @@
-import { getRandomInt } from "./util/helper"
+import { getRandomArbitrary, getRandomInt } from "./util/helper"
 
 type IPlayer = {
     name ?: string
     id: number
+    percent ?: number
 }
 
 export default class App {
@@ -15,7 +16,7 @@ export default class App {
     racing : any = undefined
     rewarding : any = undefined
 
-    player : IPlayer[] = [{id:1},{id:2},{id:3},{id:4}]
+    player : IPlayer[] = [{id:1, percent : 0, name : "1"},{id:2, percent : 0, name : "2"},{id:3, percent : 0, name : "3"},{id:4, percent : 0, name : "4"}]
     pot : number[] = [0,0,0,0]
 
     async bet() {
@@ -35,24 +36,49 @@ export default class App {
 
     race() {
         clearInterval(this.betting);
+
+        // will set percent complete
         console.log('racing');
+
         this.isRacing = true
-        let timeRacing = 0
+        let playerWon : IPlayer= undefined
         this.racing = setInterval(() => {
-            timeRacing ++
-            console.log('racing', timeRacing);
-            if (timeRacing === this.timeRacing) {
+            this.player.forEach(player => {
+                if (player.percent < 100) {
+
+                    player.percent += Math.floor(getRandomArbitrary(10,20))
+                    if (player.percent > 100) {
+                        player.percent = 100
+                        if (playerWon === undefined) {
+
+                            playerWon = player
+                            console.log('playerWon', playerWon);
+                        }
+                    }
+                }
+            })
+
+            const notGetYet = this.player.find(player => player.percent < 100)
+            console.log('notGetYet', notGetYet);
+            
+            console.log('racing', this.player);
+            if (notGetYet === undefined) {
                 this.isRacing = false
-                this.reward()
+                this.reward(playerWon)
             }
-        }, 1000)
+        }, 500)
 
     }
 
-    reward() {
+    reward(player : IPlayer) {
+        console.log('player', player);
+        
         clearInterval(this.racing);
+        this.player.forEach(player => {
+            player.percent = 0
+        })
+        console.log('rewarding', player.name);
         setTimeout(() => {
-            console.log('rewarding', this.player[getRandomInt(4)]);
             this.bet()
         }, this.timeRewarding * 1000)
     }
