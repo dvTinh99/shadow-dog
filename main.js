@@ -13,9 +13,10 @@ window.addEventListener('load', function() {
             this.width =  width
             this.height = height
             this.GroundMargin = 80
-            this.speed = 30
+            this.speed = 2
             this.maxSpeed = 3
             this.background = new Background(this)
+            this.isStop = false
             this.players = [
                 new Player(this, player, 0, 230),
                 new Player(this, bear, 0, 250),
@@ -54,10 +55,16 @@ window.addEventListener('load', function() {
     function animate(timeStamp) {
         const deltaTime = timeStamp - lastTime
         lastTime = timeStamp
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        game.update(deltaTime)
-        game.draw(ctx)
+        if (!game.isStop) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            game.update(deltaTime)
+            game.draw(ctx)
+        }
         requestAnimationFrame(animate)
+    }
+
+    function stopGame() {
+        cancelAnimationFrame(animate) 
     }
 
     animate(0)

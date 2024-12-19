@@ -35,34 +35,34 @@ export default class Player {
     }
 
     update(input, deltaTime) {
-        if (this.frameTimer > this.frameInterval) {
-            if (this.frameX < this.maxFrame) this.frameX ++
-            else this.frameX = 0
-            this.frameTimer = 0
-        } else {
-            this.frameTimer += deltaTime
+
+        if (this.speed > 0 ) {
+
+            if (this.frameTimer > this.frameInterval) {
+                if (this.frameX < this.maxFrame) this.frameX ++
+                else this.frameX = 0
+                this.frameTimer = 0
+            } else {
+                this.frameTimer += deltaTime
+            }
         }
 
 
-        this.x += this.speed
+        console.log('this.getRandomArbitrary(0, 10)', this.getRandomArbitrary(0, 10));
+        
+        this.x += this.speed + this.getRandomArbitrary(0, 5)
         
 
         if (this.x <=0 ) this.x = 0
         else if (this.x >= this.gameWidth - (this.width)) {
             this.x = this.gameWidth - (this.width)
+            this.game.speed = 0
+            this.game.isStop = true
         }
+    }
 
-        // vertical movement
-        this.y += this.vy
-        // if(!this.onGround()) {
-        //     this.vy += this.weight
-        // } else {
-        //     this.vy = 0
-        // }
-
-        // if(this.y > this.gameHeight - (this.height )) {
-        //     this.y = this.gameHeight - (this.height )
-        // }
+    getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
     }
 
 }
