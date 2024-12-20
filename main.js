@@ -22,12 +22,12 @@ window.addEventListener('load', function() {
             this.finish = new FinishLine(this)
             this.isStop = false
             this.players = [
-                new Player(this, player, 0, 230),
-                new Player(this, bear, 0, 250),
-                new Player(this, hippo, 0, 270),
-                new Player(this, giraffe, 0, 300),
-                new Player(this, elephant, 0, 330),
-                new Player(this, zebra, 0, 360),
+                new Player(this, player, 0, 230, 'player', './sound/blocky.mp3'),
+                new Player(this, bear, 0, 250, "bear", './sound/clicky.mp3'),
+                new Player(this, hippo, 0, 270, "hippo", './sound/grass.mp3'),
+                new Player(this, giraffe, 0, 300, "giraffe", './sound/ground.mp3'),
+                new Player(this, elephant, 0, 330, "elephant", './sound/hall.mp3'),
+                new Player(this, zebra, 0, 360, "zebra", './sound/muffled.mp3'),
             ]
             this.input = new InputHandler()
             this.enemies = []
@@ -56,6 +56,7 @@ window.addEventListener('load', function() {
     }
 
     let game = new Game(canvas.width, canvas.height)
+    let reward = new Reward(canvas.width, canvas.height)
     
     let lastTime = 0
     function animate(timeStamp) {
@@ -65,13 +66,14 @@ window.addEventListener('load', function() {
         
         if (game.input.lastKey === 'PRESS ENTER') {
             game = new Game(canvas.width, canvas.height)
+            reward = new Reward(canvas.width, canvas.height)
         } else {
             ctx.clearRect(0, 0, canvas.width, canvas.height)
             if (!game.isStop) {
                 game.update(deltaTime)
                 game.draw(ctx)
             } else {
-                let reward = new Reward(game.winner.image, canvas.width, canvas.height)
+                reward.updatePlayerImage(game.winner.image)
                 reward.update()
                 reward.draw(ctx)
             }

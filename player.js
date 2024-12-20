@@ -1,5 +1,5 @@
 export default class Player {
-    constructor(game, player, x = 0, y = 0, name = ' default') {
+    constructor(game, player, x = 0, y = 0, name = ' default', soundSource) {
         this.game = game
         this.name = name
 
@@ -27,6 +27,9 @@ export default class Player {
         this.frameTimer = 0
         this.frameInterval = 1000/this.fps
 
+        this.sound = new Audio()
+        this.sound.src = soundSource
+
         // this.game.speed = 10
     }
     draw(context) {
@@ -48,8 +51,12 @@ export default class Player {
         if (this.speed > 0 ) {
 
             if (this.frameTimer > this.frameInterval) {
-                if (this.frameX < this.maxFrame) this.frameX ++
-                else this.frameX = 0
+                if (this.frameX < this.maxFrame) { 
+                    this.frameX ++
+                    this.sound.play()
+                } else {
+                    this.frameX = 0
+                }
                 this.frameTimer = 0
             } else {
                 this.frameTimer += deltaTime
@@ -75,8 +82,6 @@ export default class Player {
             this.game.winner = this
             this.game.speed = 0
             this.game.isStop = true
-
-            
         }
     }
 

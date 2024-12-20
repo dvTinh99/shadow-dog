@@ -1,9 +1,12 @@
 
 export class Reward {
-    constructor(player, width, height) {
+    constructor(width, height) {
         this.width =  width
         this.height = height
-        // this.player = player
+        this.sound = new Audio()
+        this.sound.src = './sound/winfretless.ogg'
+        this.oneTime = true
+        this.player = null
         this.crown = {
             image : crown,
             height : 1200,
@@ -14,14 +17,23 @@ export class Reward {
         }
 
         this.player = {
-            image : player,
+            image : null,
             width : 130,
             height : 200
         }
     }
 
+    updatePlayerImage(image) {
+        this.player.image = image
+    }
+
     update() {
         // this.background.update()
+        
+        if (this.oneTime) {
+            this.sound.play()
+            this.oneTime = false
+        }
         
     }
 
