@@ -21,6 +21,6 @@ export default class FinishLine {
     }
 
     draw(context : CanvasDrawImage) {
-        context.drawImage(this.image, this.x, this.x, this.width, this.height)
+        context.drawImage(this.image, this.x, this.y, this.width, this.height)
     }
 }

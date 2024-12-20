@@ -25,23 +25,26 @@
 </template>
 <script setup lang="ts">
 import { useTemplateRef, ref, onMounted } from "vue";
-import Game from "@/entity/Game.ts";
-import Player from "@/entity/Player.ts";
+import Game from "@/entity/Game";
+import Reward from "@/entity/Reward";
+import Player from "@/entity/Player";
 const canvas = useTemplateRef<any>("canvas");
 let lastTime = 0;
 let game = null;
+let reward = null;
 let ctx = null;
 onMounted(() => {
   console.log("mounted");
 
   ctx = canvas.value.getContext("2d");
 
-  canvas.value.width = 1000;
+  canvas.value.width = 700;
   canvas.value.height = 500;
 
   game = new Game(canvas.value.width, canvas.value.height);
+  reward = new Reward(canvas.value.width, canvas.value.height);
   const players = [
-        new Player(game, deer, 0, 230, 'deer', './sound/blocky.mp3'),
+        new Player(game, deer, 0, 230, 'deer', '/sound/blocky.mp3'),
         new Player(game, bear, 0, 250, "bear", './sound/clicky.mp3'),
         new Player(game, hippo, 0, 270, "hippo", './sound/grass.mp3'),
         new Player(game, giraffe, 0, 300, "giraffe", './sound/ground.mp3'),
@@ -57,7 +60,17 @@ function animate(timeStamp) {
   lastTime = timeStamp;
 
   if (game.input.lastKey === "PRESS ENTER") {
-    game = new Game(700, 500);
+    game = new Game(canvas.width, canvas.height);
+    const players = [
+        new Player(game, deer, 0, 230, 'deer', '/sound/blocky.mp3'),
+        new Player(game, bear, 0, 250, "bear", './sound/clicky.mp3'),
+        new Player(game, hippo, 0, 270, "hippo", './sound/grass.mp3'),
+        new Player(game, giraffe, 0, 300, "giraffe", './sound/ground.mp3'),
+        new Player(game, elephant, 0, 330, "elephant", './sound/hall.mp3'),
+        new Player(game, zebra, 0, 360, "zebra", './sound/muffled.mp3'),
+    ]
+game.setPlayers(players)
+
     reward = new Reward(canvas.width, canvas.height);
   } else {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
