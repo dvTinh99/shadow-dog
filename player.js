@@ -15,7 +15,7 @@ export default class Player {
         this.frameX = 0
         this.frameY = 0
 
-        this.speed = 1
+        this.speed = 0
         this.maxSpeed = 10;
 
         this.vy = 0
@@ -45,14 +45,9 @@ export default class Player {
             } else {
                 this.frameTimer += deltaTime
             }
+            console.log('this.getRandomArbitrary(0, 10)', this.getRandomArbitrary(0, 10));
+            this.x += this.speed + this.getRandomArbitrary(0, 5)
         }
-
-
-        console.log('this.getRandomArbitrary(0, 10)', this.getRandomArbitrary(0, 10));
-        
-        this.x += this.speed + this.getRandomArbitrary(0, 5)
-        
-
         if (this.x <=0 ) this.x = 0
         else if (this.x >= this.gameWidth - (this.width)) {
             this.x = this.gameWidth - (this.width)

@@ -13,7 +13,7 @@ window.addEventListener('load', function() {
             this.width =  width
             this.height = height
             this.GroundMargin = 80
-            this.speed = 2
+            this.speed = 0
             this.maxSpeed = 3
             this.background = new Background(this)
             this.isStop = false
