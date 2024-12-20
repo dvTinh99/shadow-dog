@@ -72,8 +72,10 @@ export default class Player {
         let finishXStart = this.game.finish.layer.x
         if (this.x > finishXStart) {
             console.log('impact', this.name);
+            this.game.winner = this
             this.game.speed = 0
             this.game.isStop = true
+
             
         }
     }

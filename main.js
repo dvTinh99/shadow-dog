@@ -2,13 +2,14 @@ import Player from './player.js'
 import InputHandler from './input.js'
 import { Background } from './background.js'
 import { FinishLine } from './finish.js'
+import { Reward } from './Reward.js'
 window.addEventListener('load', function() {
     const canvas = document.getElementById('canvas1')
 
     const ctx = canvas.getContext('2d')
     canvas.width = 700
     canvas.height = 500
-    const inputGlobal = new InputHandler()
+    let state = 'RE'
 
     class Game {
         constructor(width, height) {
@@ -16,6 +17,7 @@ window.addEventListener('load', function() {
             this.height = height
             this.GroundMargin = 80
             this.speed = 0
+            this.winner = null
             this.background = new Background(this)
             this.finish = new FinishLine(this)
             this.isStop = false
@@ -54,19 +56,24 @@ window.addEventListener('load', function() {
     }
 
     let game = new Game(canvas.width, canvas.height)
-
+    
     let lastTime = 0
     function animate(timeStamp) {
         const deltaTime = timeStamp - lastTime
         lastTime = timeStamp
+        
+        
         if (game.input.lastKey === 'PRESS ENTER') {
             game = new Game(canvas.width, canvas.height)
-            console.log('new game', game);
         } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
             if (!game.isStop) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height)
                 game.update(deltaTime)
                 game.draw(ctx)
+            } else {
+                let reward = new Reward(game.winner.image, canvas.width, canvas.height)
+                reward.update()
+                reward.draw(ctx)
             }
         }
         requestAnimationFrame(animate)
