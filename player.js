@@ -1,6 +1,7 @@
 export default class Player {
-    constructor(game, player, x = 0, y = 0) {
+    constructor(game, player, x = 0, y = 0, name = ' default') {
         this.game = game
+        this.name = name
 
         this.gameWidth = this.game.width
         this.gameHeight = this.game.height
@@ -36,9 +37,13 @@ export default class Player {
 
     update(input, deltaTime) {
 
+        this.checkFinish() 
         if (input === 'PRESS RIGHT') {
             this.speed = 1
             this.game.speed = 10
+        }
+        if (input === 'PRESS ENTER') {
+            this.game.reset(this.game)
         }
         if (this.speed > 0 ) {
 
@@ -49,7 +54,6 @@ export default class Player {
             } else {
                 this.frameTimer += deltaTime
             }
-            console.log('this.getRandomArbitrary(0, 10)', this.getRandomArbitrary(0, 10));
             this.x += this.speed + this.getRandomArbitrary(0, 5)
         }
         if (this.x <=0 ) this.x = 0
@@ -62,6 +66,16 @@ export default class Player {
 
     getRandomArbitrary(min, max) {
         return Math.random() * (max - min) + min;
+    }
+
+    checkFinish() {
+        let finishXStart = this.game.finish.layer.x
+        if (this.x > finishXStart) {
+            console.log('impact', this.name);
+            this.game.speed = 0
+            this.game.isStop = true
+            
+        }
     }
 
 }

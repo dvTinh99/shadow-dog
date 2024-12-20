@@ -8,6 +8,7 @@ window.addEventListener('load', function() {
     const ctx = canvas.getContext('2d')
     canvas.width = 700
     canvas.height = 500
+    const inputGlobal = new InputHandler()
 
     class Game {
         constructor(width, height) {
@@ -52,16 +53,21 @@ window.addEventListener('load', function() {
         }
     }
 
-    const game = new Game(canvas.width, canvas.height)
+    let game = new Game(canvas.width, canvas.height)
 
     let lastTime = 0
     function animate(timeStamp) {
         const deltaTime = timeStamp - lastTime
         lastTime = timeStamp
-        if (!game.isStop) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height)
-            game.update(deltaTime)
-            game.draw(ctx)
+        if (game.input.lastKey === 'PRESS ENTER') {
+            game = new Game(canvas.width, canvas.height)
+            console.log('new game', game);
+        } else {
+            if (!game.isStop) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height)
+                game.update(deltaTime)
+                game.draw(ctx)
+            }
         }
         requestAnimationFrame(animate)
     }

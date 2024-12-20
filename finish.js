@@ -25,21 +25,14 @@ export class FinishLine {
         this.height = 150
         this.layer1Image = finish
         
-        this.layer1 = new Finish(this.game, this.width, this.height, this.game.speed, this.layer1Image)
-        this.backgroundLayers = [
-            this.layer1, 
-        ]
+        this.layer = new Finish(this.game, this.width, this.height, this.game.speed, this.layer1Image)
     }
 
     update() {
-        this.backgroundLayers.forEach(layer => {
-            layer.update()
-        })
+        this.layer.update()
     }
 
     draw(context) {
-        this.backgroundLayers.forEach(layer => {
-            layer.draw(context)
-        })
+        this.layer.draw(context)
     }
 }
