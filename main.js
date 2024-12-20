@@ -22,7 +22,7 @@ window.addEventListener('load', function() {
             this.finish = new FinishLine(this)
             this.isStop = false
             this.players = [
-                new Player(this, player, 0, 230, 'player', './sound/blocky.mp3'),
+                new Player(this, deer, 0, 230, 'deer', './sound/blocky.mp3'),
                 new Player(this, bear, 0, 250, "bear", './sound/clicky.mp3'),
                 new Player(this, hippo, 0, 270, "hippo", './sound/grass.mp3'),
                 new Player(this, giraffe, 0, 300, "giraffe", './sound/ground.mp3'),

@@ -7,7 +7,7 @@ export default class Player {
         this.gameHeight = this.game.height
 
         this.image = player
-        this.width = 130
+        this.width = 129
         this.height = 200
 
         this.x = x;
@@ -61,14 +61,14 @@ export default class Player {
             } else {
                 this.frameTimer += deltaTime
             }
-            this.x += this.speed + this.getRandomArbitrary(0, 5)
+            this.x += this.getRandomArbitrary(0, 5)
         }
         if (this.x <=0 ) this.x = 0
-        else if (this.x >= this.gameWidth - (this.width)) {
-            this.x = this.gameWidth - (this.width)
-            this.game.speed = 0
-            this.game.isStop = true
-        }
+        // else if (this.x >= this.gameWidth - (this.width)) {
+        //     this.x = this.gameWidth - (this.width)
+        //     this.game.speed = 0
+        //     this.game.isStop = true
+        // }
     }
 
     getRandomArbitrary(min, max) {
@@ -78,10 +78,15 @@ export default class Player {
     checkFinish() {
         let finishXStart = this.game.finish.layer.x
         if (this.x > finishXStart) {
-            console.log('impact', this.name);
-            this.game.winner = this
-            this.game.speed = 0
-            this.game.isStop = true
+            if (this.game.winner === null) {
+                this.game.winner = this
+                this.game.speed = 0
+            }
+
+            setTimeout(() => {
+                this.game.isStop = true
+            }, 2000)
+            // this.game.isStop = true
         }
     }
 
