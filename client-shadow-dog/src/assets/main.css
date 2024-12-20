@@ -1,38 +1,24 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Helvetica', cursive;
-
-}
-
-body {
-    overflow: hidden;
-}
-
-canvas {
-    top : 0;
-    left: 0;
+    margin: 0 !important;
 }
 
 img {
     display: none;
 }
 
+body {
+    overflow: hidden;
+}
+
+#app {
+    height: 100vh;
+}
+
 #canvas1 {
-    border: 5px solid black;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: 100%;
-    max-height: 100%;
-}
-
-#loading {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    text-align: center;
-    font-size: 80px;
+    max-width: 50%;
+    max-height: 50%;
 }

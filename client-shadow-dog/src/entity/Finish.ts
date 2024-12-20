@@ -1,4 +1,4 @@
-export class FinishLine {
+export default class FinishLine {
     game : any
     width : number
     height : number

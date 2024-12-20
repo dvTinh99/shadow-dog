@@ -1,5 +1,3 @@
-import { CanvasHTMLAttributes } from "vue"
-
 class Layer {
     game : any
     width : number
@@ -31,7 +29,7 @@ class Layer {
     }
 }
 
-export class Background {
+export default class Background {
     game : any
     width : number
     height : number

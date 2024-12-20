@@ -7,7 +7,7 @@ window.addEventListener('load', function() {
     const canvas = document.getElementById('canvas1')
 
     const ctx = canvas.getContext('2d')
-    canvas.width = 700
+    canvas.width = 1000
     canvas.height = 500
     let state = 'RE'
 
@@ -15,7 +15,7 @@ window.addEventListener('load', function() {
         constructor(width, height) {
             this.width =  width
             this.height = height
-            this.GroundMargin = 80
+            this.groundMargin = 80
             this.speed = 0
             this.winner = null
             this.background = new Background(this)
