@@ -26,7 +26,7 @@ export default class Player {
         this.frameTimer = 0
         this.frameInterval = 1000/this.fps
 
-        this.game.speed = 10
+        // this.game.speed = 10
     }
     draw(context) {
         context.drawImage(this.image,
@@ -36,6 +36,10 @@ export default class Player {
 
     update(input, deltaTime) {
 
+        if (input === 'PRESS RIGHT') {
+            this.speed = 1
+            this.game.speed = 10
+        }
         if (this.speed > 0 ) {
 
             if (this.frameTimer > this.frameInterval) {

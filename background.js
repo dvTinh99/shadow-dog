@@ -11,7 +11,7 @@ class Layer {
 
     update() {
         if (this.x < -this.width) this.x = 0
-        else this.x -= this.game.speed * this.speedModifier
+        else this.x -= this.game.speed
     }
 
     draw(context) {

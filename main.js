@@ -1,6 +1,7 @@
 import Player from './player.js'
 import InputHandler from './input.js'
 import { Background } from './background.js'
+import { FinishLine } from './finish.js'
 window.addEventListener('load', function() {
     const canvas = document.getElementById('canvas1')
 
@@ -14,8 +15,8 @@ window.addEventListener('load', function() {
             this.height = height
             this.GroundMargin = 80
             this.speed = 0
-            this.maxSpeed = 3
             this.background = new Background(this)
+            this.finish = new FinishLine(this)
             this.isStop = false
             this.players = [
                 new Player(this, player, 0, 230),
@@ -33,6 +34,7 @@ window.addEventListener('load', function() {
 
         update(deltaTime) {
             this.background.update()
+            this.finish.update()
             this.players.forEach(player => {
                 player.update(this.input.lastKey, deltaTime)
             })
@@ -40,6 +42,7 @@ window.addEventListener('load', function() {
 
         draw(context) {
             this.background.draw(context)
+            this.finish.draw(context)
             this.players.forEach(player => {
                 player.draw(context)
             })
