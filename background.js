@@ -32,20 +32,12 @@ export class Background {
         this.game = game
         this.width = 384
         this.height = 500
-        this.layer1Image = layer1
-        this.layer2Image = layer2
-        this.layer3Image = layer3
-        this.layer6Image = layer6
-        
-        this.layer1 = new Layer(this.game, this.width, this.height, this.game.speed, this.layer1Image)
-        this.layer2 = new Layer(this.game, this.width, this.height, this.game.speed, this.layer2Image)
-        this.layer3 = new Layer(this.game, this.width, this.height, this.game.speed, this.layer3Image)
-        this.layer6 = new Layer(this.game, this.width, this.height, this.game.speed, this.layer6Image)
+
         this.backgroundLayers = [
-            this.layer6,
-            this.layer1, 
-            this.layer3,
-            this.layer2,
+            new Layer(this.game, this.width, this.height, this.game.speed, layer6),
+            new Layer(this.game, this.width, this.height, this.game.speed, layer1),
+            new Layer(this.game, this.width, this.height, this.game.speed, layer3),
+            new Layer(this.game, this.width, this.height, this.game.speed, layer2),
         ]
     }
 

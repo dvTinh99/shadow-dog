@@ -68,11 +68,6 @@ export default class Player {
             this.x += this.getRandomArbitrary(0, 5)
         }
         if (this.x <=0 ) this.x = 0
-        // else if (this.x >= this.gameWidth - (this.width)) {
-        //     this.x = this.gameWidth - (this.width)
-        //     this.game.speed = 0
-        //     this.game.isStop = true
-        // }
     }
 
     getRandomArbitrary(min, max) {
@@ -80,7 +75,7 @@ export default class Player {
     }
 
     checkFinish() {
-        let finishXStart = this.game.finish.layer.x
+        let finishXStart = this.game.finish.x
         if (this.x > finishXStart) {
             if (this.game.winner === null) {
                 this.game.winner = this
@@ -90,7 +85,6 @@ export default class Player {
             setTimeout(() => {
                 this.game.isStop = true
             }, 2000)
-            // this.game.isStop = true
         }
     }
 
