@@ -30,6 +30,9 @@ export default class Player {
         this.sound = new Audio()
         this.sound.src = soundSource
 
+        this.soundGun = new Audio()
+        this.soundGun.src = './sound/gun.mp3'
+
         // this.game.speed = 10
     }
     draw(context) {
@@ -42,6 +45,7 @@ export default class Player {
 
         this.checkFinish() 
         if (input === 'PRESS RIGHT') {
+            this.soundGun.play()
             this.speed = 1
             this.game.speed = 10
         }
