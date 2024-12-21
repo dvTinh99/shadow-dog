@@ -5,9 +5,20 @@ export default class Reward {
     height : number
     sound : HTMLAudioElement
     oneTime : boolean
-    crown : object
-    player : Player | null
-    background : object
+    crown : {
+        image : CanvasImageSource,
+        height : number
+        width: number
+    }
+    player : {
+        image : CanvasImageSource | null
+        width : number
+        height : number
+    } | null
+
+    background : {
+        image : CanvasImageSource
+    }
     constructor(width : number, height : number) {
         this.width =  width
         this.height = height
@@ -45,7 +56,7 @@ export default class Reward {
         
     }
 
-    draw(context) {
+    draw(context : CanvasDrawImage) {
         context.drawImage(this.background.image, 0, 0, this.width, this.height)
         context.drawImage(this.crown.image, 100, 100, this.crown.width, this.crown.height, this.width / 2 , (this.height / 2) - 20, 200, 200)
         context.drawImage(this.player.image, 0, 0, this.player.width, 

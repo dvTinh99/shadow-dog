@@ -34,8 +34,6 @@ let game = null;
 let reward = null;
 let ctx = null;
 onMounted(() => {
-  console.log("mounted");
-
   ctx = canvas.value.getContext("2d");
 
   canvas.value.width = 700;
@@ -51,7 +49,7 @@ onMounted(() => {
         new Player(game, elephant, 0, 330, "elephant", './sound/hall.mp3'),
         new Player(game, zebra, 0, 360, "zebra", './sound/muffled.mp3'),
     ]
-game.setPlayers(players)
+  game.setPlayers(players)
   animate(0);
 });
 
@@ -60,10 +58,19 @@ function animate(timeStamp) {
   lastTime = timeStamp;
 
   if (game.input.lastKey === "PRESS ENTER") {
-    game = new Game(canvas.width, canvas.height);
-    reward = new Reward(canvas.width, canvas.height);
+    game = new Game(canvas.value.width, canvas.value.height);
+    const players = [
+        new Player(game, deer, 0, 230, 'deer', '/sound/blocky.mp3'),
+        new Player(game, bear, 0, 250, "bear", './sound/clicky.mp3'),
+        new Player(game, hippo, 0, 270, "hippo", './sound/grass.mp3'),
+        new Player(game, giraffe, 0, 300, "giraffe", './sound/ground.mp3'),
+        new Player(game, elephant, 0, 330, "elephant", './sound/hall.mp3'),
+        new Player(game, zebra, 0, 360, "zebra", './sound/muffled.mp3'),
+    ]
+    game.setPlayers(players)  
+    reward = new Reward(canvas.value.width, canvas.value.height);
   } else {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.value.width, canvas.value.height);
     if (!game.isStop) {
       game.update(deltaTime);
       game.draw(ctx);

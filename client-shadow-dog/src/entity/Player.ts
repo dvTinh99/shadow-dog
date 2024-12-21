@@ -47,9 +47,11 @@ export default class Player {
 
         this.sound = new Audio()
         this.sound.src = soundSource
+        this.sound.volume = 0.02
 
         this.soundGun = new Audio()
         this.soundGun.src = './sound/gun.mp3'
+        this.soundGun.volume = 0.02
 
         // this.game.speed = 10
     }
