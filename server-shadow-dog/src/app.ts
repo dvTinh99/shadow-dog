@@ -19,6 +19,24 @@ export default class App {
 
     player : IPlayer[] = [{id:1, percent : 0, name : "1"},{id:2, percent : 0, name : "2"},{id:3, percent : 0, name : "3"},{id:4, percent : 0, name : "4"}]
     pot : number[] = [0,0,0,0]
+    state : 'betting' | 'racing' | 'rewarding' = 'betting'
+
+
+    async run() {
+        while(true) {
+            switch(this.state) {
+                case 'betting' : 
+                    await this.bet()
+                    break
+                case 'racing' :
+                    await this.race()
+                    break
+                case 'rewarding' :
+                    await this.reward(this.player[0])
+                    break
+            }
+        }
+    }
 
     async bet() {
         console.log('betting');
@@ -35,7 +53,7 @@ export default class App {
         }, 1000)
     }
 
-    race() {
+    async race() {
         clearInterval(this.betting);
         this.winInThisGame = this.getWinner()
 
@@ -77,7 +95,7 @@ export default class App {
 
     }
 
-    reward(player : IPlayer) {
+    async reward(player : IPlayer) {
         console.log('player', player);
         
         clearInterval(this.racing);
