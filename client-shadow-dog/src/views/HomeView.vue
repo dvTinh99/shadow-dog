@@ -1,8 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div >
-    <img src="@/assets/images/animal/deer.png" alt="" id='deer' ref="deer" />
+  <div>
+    <img src="@/assets/images/animal/deer.png" alt="" id="deer" ref="deer" />
     <img src="/assetHorizone/bear/bear.png" alt="" id="bear" />
     <img src="/assetHorizone/hippo/spritesheet.png" alt="" id="hippo" />
     <img src="/assetHorizone/giraffe/spritesheet (1).png" alt="" id="giraffe" />
@@ -44,14 +44,14 @@ onMounted(() => {
   game = new Game(canvas.value.width, canvas.value.height);
   reward = new Reward(canvas.value.width, canvas.value.height);
   const players = [
-        new Player(game, deer, 0, 230, 'deer', '/sound/blocky.mp3'),
-        new Player(game, bear, 0, 250, "bear", './sound/clicky.mp3'),
-        new Player(game, hippo, 0, 270, "hippo", './sound/grass.mp3'),
-        new Player(game, giraffe, 0, 300, "giraffe", './sound/ground.mp3'),
-        new Player(game, elephant, 0, 330, "elephant", './sound/hall.mp3'),
-        new Player(game, zebra, 0, 360, "zebra", './sound/muffled.mp3'),
-    ]
-game.setPlayers(players)
+    new Player(game, deer, 0, 230, "deer", "/sound/blocky.mp3"),
+    new Player(game, bear, 0, 250, "bear", "./sound/clicky.mp3"),
+    new Player(game, hippo, 0, 270, "hippo", "./sound/grass.mp3"),
+    new Player(game, giraffe, 0, 300, "giraffe", "./sound/ground.mp3"),
+    new Player(game, elephant, 0, 330, "elephant", "./sound/hall.mp3"),
+    new Player(game, zebra, 0, 360, "zebra", "./sound/muffled.mp3"),
+  ];
+  game.setPlayers(players);
   animate(0);
 });
 
@@ -62,14 +62,14 @@ function animate(timeStamp) {
   if (game.input.lastKey === "PRESS ENTER") {
     game = new Game(canvas.width, canvas.height);
     const players = [
-        new Player(game, deer, 0, 230, 'deer', '/sound/blocky.mp3'),
-        new Player(game, bear, 0, 250, "bear", './sound/clicky.mp3'),
-        new Player(game, hippo, 0, 270, "hippo", './sound/grass.mp3'),
-        new Player(game, giraffe, 0, 300, "giraffe", './sound/ground.mp3'),
-        new Player(game, elephant, 0, 330, "elephant", './sound/hall.mp3'),
-        new Player(game, zebra, 0, 360, "zebra", './sound/muffled.mp3'),
-    ]
-game.setPlayers(players)
+      new Player(game, deer, 0, 230, "deer", "/sound/blocky.mp3"),
+      new Player(game, bear, 0, 250, "bear", "./sound/clicky.mp3"),
+      new Player(game, hippo, 0, 270, "hippo", "./sound/grass.mp3"),
+      new Player(game, giraffe, 0, 300, "giraffe", "./sound/ground.mp3"),
+      new Player(game, elephant, 0, 330, "elephant", "./sound/hall.mp3"),
+      new Player(game, zebra, 0, 360, "zebra", "./sound/muffled.mp3"),
+    ];
+    game.setPlayers(players);
 
     reward = new Reward(canvas.width, canvas.height);
   } else {

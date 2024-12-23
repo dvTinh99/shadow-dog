@@ -3,7 +3,14 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    },
+    transports : ['polling', 'websocket']
+    
+});
 
 import {test} from './script.js'
 
@@ -29,6 +36,6 @@ main.bet();
     
 // });
 
-// server.listen(8888, () => {
-//   console.log('listening on *:8888');
-// });
+server.listen(8888, () => {
+  console.log('listening on *:8888');
+});
