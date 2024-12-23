@@ -28,11 +28,16 @@ import { useTemplateRef, ref, onMounted } from "vue";
 import Game from "@/entity/Game";
 import Reward from "@/entity/Reward";
 import Player from "@/entity/Player";
+import { watchEvent } from '../composable/useSocket';
 const canvas = useTemplateRef<any>("canvas");
 let lastTime = 0;
 let game = null;
 let reward = null;
 let ctx = null;
+const deltaTime = 16;
+let animation = null
+let oneTime = true
+
 onMounted(() => {
   console.log("mounted");
 
@@ -52,8 +57,27 @@ onMounted(() => {
     new Player(game, zebra, 0, 360, "zebra", "./sound/muffled.mp3"),
   ];
   game.setPlayers(players);
-  animate(0);
+  // animate(0);
+  watchEvent('game', handleSocket)
 });
+
+function handleSocket(data) {
+  console.log(data.state);
+  if (data.state === 'racing' && oneTime) {
+    oneTime = false
+    animation = requestAnimationFrame(animate)
+    console.log('animation', animation);
+    
+  } else {
+    cancelAnimationFrame(animation)
+  }
+  
+}
+
+function draw() {
+  game.update(deltaTime);
+  game.draw(ctx);
+}
 
 function animate(timeStamp) {
   const deltaTime = timeStamp - lastTime;
@@ -83,6 +107,8 @@ function animate(timeStamp) {
       reward.draw(ctx);
     }
   }
-  requestAnimationFrame(animate);
+  animation = requestAnimationFrame(animate);
+  console.log('animation', animation);
+  
 }
 </script>
