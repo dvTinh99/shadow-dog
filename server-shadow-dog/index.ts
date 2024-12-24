@@ -17,8 +17,8 @@ import {test} from './script.js'
 import App from './src/app.js'
 
 
-const main : App = new App();
-main.bet();
+const main : App = new App(io);
+main.run();
 
 // app.get('/socket.js', (req, res) => {
 //     res.sendFile(__dirname + '/socket.io.min.js');
