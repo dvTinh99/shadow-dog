@@ -23,8 +23,10 @@ export default class App {
   player: IPlayer[] = [
     { id: 1, percent: 0, name: "deer" },
     { id: 2, percent: 0, name: "bear" },
-    { id: 3, percent: 0, name: "elephant" },
-    { id: 4, percent: 0, name: "bird" }
+    { id: 3, percent: 0, name: "hippo" },
+    { id: 4, percent: 0, name: "giraffe" },
+    { id: 5, percent: 0, name: "elephant" },
+    { id: 6, percent: 0, name: "zebra" },
   ];
   pot: number[] = [0, 0, 0, 0];
   state: "betting" | "racing" | "rewarding" = "betting";
@@ -83,27 +85,27 @@ export default class App {
     return new Promise<void>((resolve) => {
       this.racing = setInterval(() => {
         this.player.forEach((player) => {
-          if (player.percent < 100) {
+          if (player.percent < 1000) {
             const increment = (player.id === this.winInThisGame.id)
-              ? Math.floor(getRandomArbitrary(5, 15))
-              : Math.floor(getRandomArbitrary(2, 10));
+              ? (getRandomArbitrary(3, 5))
+              : (getRandomArbitrary(1, 4));
 
             player.percent += increment;
 
-            if (player.percent > 100) player.percent = 100;
+            if (player.percent > 1000) player.percent = 1000;
             this.io.emit(player.name, player)
           }
         });
 
         console.log("Current Player States:", this.player);
 
-        if (this.player.every((p) => p.percent >= 100)) {
+        if (this.player.every((p) => p.percent >= 1000)) {
           clearInterval(this.racing);
           this.isRacing = false;
           this.state = "rewarding"; // Transition to the rewarding state
           resolve(); // Resolve the promise to move to the reward phase
         }
-      }, 500); // Update every half second
+      }, 21); // Update every half second
     });
   }
 
@@ -146,7 +148,7 @@ export default class App {
   // this function will find the winner of the match
   getWinner(): IPlayer {
     // Randomly determine winner
-    const winner = Math.round( getRandomArbitrary(0, this.player.length));
+    const winner = Math.round( getRandomArbitrary(0, this.player.length - 1));
     console.log(`Winner determined: Player ${winner + 1}`);
     return this.player[winner];
   }

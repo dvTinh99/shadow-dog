@@ -43,36 +43,88 @@ onMounted(() => {
 
   ctx = canvas.value.getContext("2d");
 
-  canvas.value.width = 700;
+  canvas.value.width = 1200;
   canvas.value.height = 500;
 
   game = new Game(canvas.value.width, canvas.value.height);
   reward = new Reward(canvas.value.width, canvas.value.height);
+  const deerPlayer = new Player(game, deer, 0, 230, "deer", "/sound/blocky.mp3")
+  const bearPlayer = new Player(game, bear, 0, 250, "bear", "./sound/clicky.mp3")
+  const hippoPlayer = new Player(game, hippo, 0, 270, "hippo", "./sound/grass.mp3")
+  const giraffePlayer = new Player(game, giraffe, 0, 300, "giraffe", "./sound/ground.mp3")
+  const elephantPlayer = new Player(game, elephant, 0, 330, "elephant", "./sound/hall.mp3")
+  const zebraPlayer = new Player(game, zebra, 0, 360, "zebra", "./sound/muffled.mp3")
   const players = [
-    new Player(game, deer, 0, 230, "deer", "/sound/blocky.mp3"),
-    new Player(game, bear, 0, 250, "bear", "./sound/clicky.mp3"),
-    new Player(game, hippo, 0, 270, "hippo", "./sound/grass.mp3"),
-    new Player(game, giraffe, 0, 300, "giraffe", "./sound/ground.mp3"),
-    new Player(game, elephant, 0, 330, "elephant", "./sound/hall.mp3"),
-    new Player(game, zebra, 0, 360, "zebra", "./sound/muffled.mp3"),
+    deerPlayer,
+    bearPlayer,
+    hippoPlayer,
+    giraffePlayer,
+    elephantPlayer,
+    zebraPlayer,
   ];
   game.setPlayers(players);
-  // animate(0);
-  watchEvent('game', handleSocket)
-});
+  animate(0);
 
-function handleSocket(data) {
-  console.log(data.state);
-  if (data.state === 'racing' && oneTime) {
-    oneTime = false
-    animation = requestAnimationFrame(animate)
-    console.log('animation', animation);
+  watchEvent('deer', (data) => {
+    deerPlayer.update(16, data)
+  })
+  watchEvent('bear', (data) => {
+    bearPlayer.update(16, data)
+  })
+  watchEvent('hippo', (data) => {
+    hippoPlayer.update(16, data)
+  })
+  watchEvent('giraffe', (data) => {
+    giraffePlayer.update(16, data)
+  })
+  watchEvent('elephant', (data) => {
+    elephantPlayer.update(16, data)
+  })
+  watchEvent('zebra', (data) => {
+    zebraPlayer.update(16, data)
+  })
+
+  // let data = {
+  //   percent : 0,
+  //   name : 'deer'
+  // }
+
+  // window.addEventListener('keydown', (e) => {
+  //   data.percent += 0.2
+  //   console.log('in home');
+  //   if (e.key === 'ArrowLeft') {
+  //     deerPlayer.update(16, data)
+  //   }
     
-  } else {
-    cancelAnimationFrame(animation)
-  }
+  //     // switch(e.key) {
+  //     //     case 'ArrowLeft' :
+  //     //         this.lastKey = 'PRESS LEFT'
+  //     //         break;
+  //     //     case 'ArrowRight' :
+  //     //         this.lastKey = 'PRESS RIGHT'
+  //     //         deerPlayer.update(16)
+  //     //         break;
+  //     //     case 'ArrowDown' :
+  //     //         this.lastKey = 'PRESS DOWN'
+  //     //         break;
+  //     //     case 'ArrowUp' :
+  //     //         this.lastKey = 'PRESS UP'
+  //     //         break;
+  //     //     case 'Enter' :
+  //     //         this.lastKey = 'PRESS ENTER'
+  //     //         break;
+  //     // }
+  // })
   
-}
+  
+  // watchEvent('deer', (data) => {
+  //   console.log(data);
+    
+  //   deerPlayer.update(16)
+  //   deerPlayer.draw()
+  // })
+  
+});
 
 function draw() {
   game.update(deltaTime);
@@ -108,7 +160,6 @@ function animate(timeStamp) {
     }
   }
   animation = requestAnimationFrame(animate);
-  console.log('animation', animation);
   
 }
 </script>

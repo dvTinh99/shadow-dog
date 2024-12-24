@@ -59,17 +59,19 @@ export default class Player {
             this.x, this.y, this.width , this.height );
     }
 
-    update(input : string, deltaTime : number) {
+    update(deltaTime : number, data : any | null = null) {
 
         this.checkFinish() 
-        if (input === 'PRESS RIGHT') {
-            this.soundGun.play()
-            this.speed = 1
-            this.game.speed = 10
-        }
-        if (input === 'PRESS ENTER') {
-            this.game.reset(this.game)
-        }
+        // if (data) {
+        //     this.soundGun.play()
+        //     this.speed = 1
+        //     this.game.speed = 10
+        // }
+        // if (input === 'PRESS ENTER') {
+        //     this.game.reset(this.game)
+        // }
+        this.speed = 1
+        this.game.speed = 10
         if (this.speed > 0 ) {
 
             if (this.frameTimer > this.frameInterval) {
@@ -83,7 +85,7 @@ export default class Player {
             } else {
                 this.frameTimer += deltaTime
             }
-            this.x += this.getRandomArbitrary(0, 5)
+            this.x = data.percent
         }
         if (this.x <=0 ) this.x = 0
     }
@@ -94,7 +96,7 @@ export default class Player {
 
     checkFinish() {
         let finishXStart = this.game.finish.x
-        if (this.x > finishXStart) {
+        if (this.x >= finishXStart) {
             if (this.game.winner === null) {
                 this.game.winner = this
                 this.game.speed = 0

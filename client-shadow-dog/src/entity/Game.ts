@@ -37,9 +37,9 @@ export default class Game {
         
         this.background.update()
         this.finish.update()
-        this.players.forEach(player => {
-            player.update(this.input.lastKey, deltaTime)
-        })
+        // this.players.forEach(player => {
+        //     player.update(this.input.lastKey, deltaTime)
+        // })
     }
 
     draw(context : CanvasDrawImage) {
