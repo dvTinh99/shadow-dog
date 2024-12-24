@@ -95,16 +95,21 @@ export default class Player {
     }
 
     checkFinish() {
+        // when this.x almost 1000 then show the finish
+        if (this.x > 950 && this.x < 955) {
+            this.game.finish.x = 1200
+        }
         let finishXStart = this.game.finish.x
         if (this.x >= finishXStart) {
             if (this.game.winner === null) {
                 this.game.winner = this
                 this.game.speed = 0
+                this.speed = 0
             }
 
             setTimeout(() => {
                 this.game.isStop = true
-            }, 2000)
+            }, 200)
         }
     }
 

@@ -77,6 +77,7 @@ export default class App {
   }
 
   // this function will start the race
+  // how to ensure all player in race will end in 20 second
   async race() {
     console.log("Race has started.");
     this.winInThisGame = this.getWinner();
