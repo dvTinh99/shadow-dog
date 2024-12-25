@@ -71,20 +71,22 @@ export default class Player {
         //     this.game.reset(this.game)
         // }
         this.speed = 1
-        this.game.speed = 10
+        // this.game.speed = 10
         if (this.speed > 0 ) {
-
-            if (this.frameTimer > this.frameInterval) {
-                if (this.frameX < this.maxFrame) { 
-                    this.frameX ++
-                    this.sound.play()
-                } else {
-                    this.frameX = 0
-                }
-                this.frameTimer = 0
+            if (this.frameX < this.maxFrame) { 
+                this.frameX ++
+                // this.sound.play()
             } else {
-                this.frameTimer += deltaTime
+                this.frameX = 0
             }
+
+            // if (this.frameTimer > this.frameInterval) {
+                
+            //     this.frameTimer = 0
+            // } else {
+            //     this.frameTimer += deltaTime
+            // }
+
             this.x = data.percent
         }
         if (this.x <=0 ) this.x = 0
@@ -96,9 +98,9 @@ export default class Player {
 
     checkFinish() {
         // when this.x almost 1000 then show the finish
-        if (this.x > 950 && this.x < 955) {
-            this.game.finish.x = 1200
-        }
+        // if (this.x > 950 && this.x < 955) {
+        //     this.game.finish.x = 1200
+        // }
         let finishXStart = this.game.finish.x
         if (this.x >= finishXStart) {
             if (this.game.winner === null) {
@@ -106,10 +108,12 @@ export default class Player {
                 this.game.speed = 0
                 this.speed = 0
             }
-
-            setTimeout(() => {
-                this.game.isStop = true
-            }, 200)
+            
+            if (!this.game.isStop) {
+                setTimeout(() => {
+                    this.game.setIsStop(true)
+                }, 200)
+            }
         }
     }
 

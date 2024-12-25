@@ -33,6 +33,17 @@ export default class Game {
         this.players = players
     }
 
+    setIsStop(value : boolean) {
+        this.isStop = value
+    }
+
+    restartPlayer() {
+        this.players.forEach(player => {
+            player.x = 0
+            player.frameX = 0
+        })
+    }
+
     update(deltaTime : number) {
         
         this.background.update()

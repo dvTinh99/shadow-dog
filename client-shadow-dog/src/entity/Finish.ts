@@ -12,7 +12,7 @@ export default class FinishLine {
         this.height = 150
         this.image = finish
         
-        this.x = 5200
+        this.x = 1100
         this.y = 350
     }
 

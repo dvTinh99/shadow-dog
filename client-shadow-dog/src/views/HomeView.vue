@@ -31,7 +31,7 @@ import Player from "@/entity/Player";
 import { watchEvent } from '../composable/useSocket';
 const canvas = useTemplateRef<any>("canvas");
 let lastTime = 0;
-let game = null;
+let game : Game = null;
 let reward = null;
 let ctx = null;
 const deltaTime = 16;
@@ -84,46 +84,49 @@ onMounted(() => {
     zebraPlayer.update(16, data)
   })
 
-  // let data = {
-  //   percent : 0,
-  //   name : 'deer'
-  // }
+  watchEvent('bettingStart', (data) => {
+    console.log('bettingStart', data);
+    console.log('game.isStop', game.isStop);
+    
+    game.setIsStop(false)
+    console.log('game.isStop after', game.isStop);
+    game.restartPlayer()
+  })
 
   // window.addEventListener('keydown', (e) => {
-  //   data.percent += 0.2
   //   console.log('in home');
-  //   if (e.key === 'ArrowLeft') {
-  //     deerPlayer.update(16, data)
-  //   }
+    // if (e.key === 'ArrowLeft') {
+    //   console.log('left ne');
+    //   if (game.isStop) {
+
+    //     game.setIsStop(false)
+    //   } else {
+    //     game.isStop = true
+    //   }
+    //   console.log('is stop', game.isStop);
+      
+    // }
     
-  //     // switch(e.key) {
-  //     //     case 'ArrowLeft' :
-  //     //         this.lastKey = 'PRESS LEFT'
-  //     //         break;
-  //     //     case 'ArrowRight' :
-  //     //         this.lastKey = 'PRESS RIGHT'
-  //     //         deerPlayer.update(16)
-  //     //         break;
-  //     //     case 'ArrowDown' :
-  //     //         this.lastKey = 'PRESS DOWN'
-  //     //         break;
-  //     //     case 'ArrowUp' :
-  //     //         this.lastKey = 'PRESS UP'
-  //     //         break;
-  //     //     case 'Enter' :
-  //     //         this.lastKey = 'PRESS ENTER'
-  //     //         break;
-  //     // }
+      // switch(e.key) {
+      //     case 'ArrowLeft' :
+      //         this.lastKey = 'PRESS LEFT'
+      //         break;
+      //     case 'ArrowRight' :
+      //         this.lastKey = 'PRESS RIGHT'
+      //         deerPlayer.update(16)
+      //         break;
+      //     case 'ArrowDown' :
+      //         this.lastKey = 'PRESS DOWN'
+      //         break;
+      //     case 'ArrowUp' :
+      //         this.lastKey = 'PRESS UP'
+      //         break;
+      //     case 'Enter' :
+      //         this.lastKey = 'PRESS ENTER'
+      //         break;
+      // }
   // })
-  
-  
-  // watchEvent('deer', (data) => {
-  //   console.log(data);
-    
-  //   deerPlayer.update(16)
-  //   deerPlayer.draw()
-  // })
-  
+
 });
 
 function draw() {
@@ -132,32 +135,21 @@ function draw() {
 }
 
 function animate(timeStamp) {
+  // console.log('game.isStop', game.isStop);
+  
   const deltaTime = timeStamp - lastTime;
   lastTime = timeStamp;
 
-  if (game.input.lastKey === "PRESS ENTER") {
-    game = new Game(canvas.width, canvas.height);
-    const players = [
-      new Player(game, deer, 0, 230, "deer", "/sound/blocky.mp3"),
-      new Player(game, bear, 0, 250, "bear", "./sound/clicky.mp3"),
-      new Player(game, hippo, 0, 270, "hippo", "./sound/grass.mp3"),
-      new Player(game, giraffe, 0, 300, "giraffe", "./sound/ground.mp3"),
-      new Player(game, elephant, 0, 330, "elephant", "./sound/hall.mp3"),
-      new Player(game, zebra, 0, 360, "zebra", "./sound/muffled.mp3"),
-    ];
-    game.setPlayers(players);
-
-    reward = new Reward(canvas.width, canvas.height);
-  } else {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (!game.isStop) {
-      game.update(deltaTime);
-      game.draw(ctx);
-    } else {
-      reward.updatePlayerImage(game.winner.image);
-      reward.update();
-      reward.draw(ctx);
-    }
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  
+  if (!game.isStop) {
+    game.update(deltaTime);
+    game.draw(ctx);
+  } else if (game.isStop) {
+    reward.updatePlayerImage(game.winner.image);
+    reward.update();
+    reward.draw(ctx);
   }
   animation = requestAnimationFrame(animate);
   
