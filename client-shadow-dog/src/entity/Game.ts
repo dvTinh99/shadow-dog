@@ -29,7 +29,22 @@ export default class Game {
         this.input = new InputHandler()
     }
 
-    setPlayers(players : Player[]) {
+    setPlayers() {
+        const deerPlayer = new Player(this, deer, 0, 230, "deer", "/sound/blocky.mp3")
+        const bearPlayer = new Player(this, bear, 0, 250, "bear", "./sound/clicky.mp3")
+        const hippoPlayer = new Player(this, hippo, 0, 270, "hippo", "./sound/grass.mp3")
+        const giraffePlayer = new Player(this, giraffe, 0, 300, "giraffe", "./sound/ground.mp3")
+        const elephantPlayer = new Player(this, elephant, 0, 330, "elephant", "./sound/hall.mp3")
+        const zebraPlayer = new Player(this, zebra, 0, 360, "zebra", "./sound/muffled.mp3")
+
+        const players = [
+            deerPlayer,
+            bearPlayer,
+            hippoPlayer,
+            giraffePlayer,
+            elephantPlayer,
+            zebraPlayer
+        ]
         this.players = players
     }
 
