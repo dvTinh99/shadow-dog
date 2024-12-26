@@ -21,31 +21,29 @@
       <div class="canvas-holder">
         <canvas ref="canvas" id="canvas1"></canvas>
       </div>
+        <div>
+            <ul class="nav nav-tabs justify-content-center">
+                <li class="nav-item">
+                <a class="nav-link" :class="{active : tab === 'bet'}" aria-current="page" @click="changeTab('bet')">Bet</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" :class="{active : tab === 'chat'}" @click="changeTab('chat')">Chat</a>
+                </li>
+            </ul>
+        </div>
       
-      <info-bet />
-      
-      <bet/>
-
-      <chat-box />
+      <div v-if="tab === 'bet'">
+        <info-bet />
+        <bet/>
+      </div>
+      <div v-if="tab === 'chat'" style="height: 70%;">
+         <chat-box />
+      </div>
 
   </div>
 </template>
-<style>
-#app {
-  width: 100%;
-  height: 100%;
+<style scoped>
 
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-color: burlywood;
-  display: flex;
-  justify-content: center;
-
-  /* position: absolute; */
-  /* top: 50%;
-  left: 50%; */
-  /* transform: translate(-50%, -50%); */
-}
 
 @media only screen and (max-width: 768px) {
     .home {
@@ -63,6 +61,10 @@
   height: 100%;
   background-color: burlywood;
 }
+
+/* #bet, #chat {
+    display: block;
+} */
 
 .canvas-holder {
   position: relative;
@@ -84,22 +86,16 @@
   max-height: auto;
 }
 
-
-.custom-alert {
-  padding: 7px !important;
-  display: flex;
-  align-items: center;
-}
 </style>
 <script setup lang="ts">
 import { useTemplateRef, ref, onMounted } from "vue";
 import Game from "@/entity/Game";
 import Reward from "@/entity/Reward";
 import Player from "@/entity/Player";
-import { watchEvent } from '../composable/useSocket';
-import ChatBox from "@/components/ChatBox.vue";
-import InfoBet from "@/components/InfoBet.vue";
-import Bet from "@/components/Bet.vue";
+// import { watchEvent } from '../composable/useSocket';
+import ChatBox from "@/layout/ChatBox.vue";
+import InfoBet from "@/layout/InfoBet.vue";
+import Bet from "@/layout/Bet.vue";
 const canvas = useTemplateRef<any>("canvas");
 let lastTime = 0;
 let game : Game = null;
@@ -108,6 +104,12 @@ let ctx = null;
 const deltaTime = 16;
 let animation = null
 let oneTime = true
+const tab = ref<string>('bet')
+
+const changeTab = (name : string) => {
+    console.log('ok', name);
+    tab.value = name
+}
 
 onMounted(() => {
   console.log("mounted");
@@ -136,33 +138,33 @@ onMounted(() => {
   game.setPlayers(players);
   animate(0);
 
-  watchEvent('deer', (data) => {
-    deerPlayer.update(16, data)
-  })
-  watchEvent('bear', (data) => {
-    bearPlayer.update(16, data)
-  })
-  watchEvent('hippo', (data) => {
-    hippoPlayer.update(16, data)
-  })
-  watchEvent('giraffe', (data) => {
-    giraffePlayer.update(16, data)
-  })
-  watchEvent('elephant', (data) => {
-    elephantPlayer.update(16, data)
-  })
-  watchEvent('zebra', (data) => {
-    zebraPlayer.update(16, data)
-  })
+//   watchEvent('deer', (data) => {
+//     deerPlayer.update(16, data)
+//   })
+//   watchEvent('bear', (data) => {
+//     bearPlayer.update(16, data)
+//   })
+//   watchEvent('hippo', (data) => {
+//     hippoPlayer.update(16, data)
+//   })
+//   watchEvent('giraffe', (data) => {
+//     giraffePlayer.update(16, data)
+//   })
+//   watchEvent('elephant', (data) => {
+//     elephantPlayer.update(16, data)
+//   })
+//   watchEvent('zebra', (data) => {
+//     zebraPlayer.update(16, data)
+//   })
 
-  watchEvent('bettingStart', (data) => {
-    console.log('bettingStart', data);
-    console.log('game.isStop', game.isStop);
+//   watchEvent('bettingStart', (data) => {
+//     console.log('bettingStart', data);
+//     console.log('game.isStop', game.isStop);
     
-    game.setIsStop(false)
-    console.log('game.isStop after', game.isStop);
-    game.restartPlayer()
-  })
+//     game.setIsStop(false)
+//     console.log('game.isStop after', game.isStop);
+//     game.restartPlayer()
+//   })
 
   // window.addEventListener('keydown', (e) => {
   //   console.log('in home');

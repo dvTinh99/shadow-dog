@@ -32,6 +32,7 @@ class App {
         ];
         this.pot = [0, 0, 0, 0];
         this.state = "betting";
+        this.nitro = [];
         this.io = io;
     }
     // this function will run on 3 states
@@ -75,45 +76,60 @@ class App {
         });
     }
     // this function will start the race
+    // I want the race to be more interesting, the animals will compete fiercely, and finally winInThisGame will accelerate to the finish line.
     race() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("Race has started.");
-            this.winInThisGame = this.getWinner();
+            setTimeout(() => {
+                this.winInThisGame = this.getWinner();
+                console.log('this.winInThisGame', this.winInThisGame);
+            }, 2000);
+            setTimeout(() => {
+                this.winInThisGame = this.getWinner();
+                console.log('this.winInThisGame', this.winInThisGame);
+            }, 8000);
+            setTimeout(() => {
+                this.winInThisGame = this.getWinner();
+                console.log('this.winInThisGame', this.winInThisGame);
+            }, 15000);
             this.isRacing = true;
             return new Promise((resolve) => {
                 this.racing = setInterval(() => {
                     this.player.forEach((player) => {
-                        if (player.percent < 1000) {
-                            const increment = (player.id === this.winInThisGame.id)
-                                ? ((0, helper_1.getRandomArbitrary)(3, 5))
-                                : ((0, helper_1.getRandomArbitrary)(1, 4));
+                        var _a;
+                        if (player.percent < 1101) {
+                            const increment = (player.id === ((_a = this.winInThisGame) === null || _a === void 0 ? void 0 : _a.id))
+                                ? ((0, helper_1.getRandomArbitrary)(5, 10))
+                                : ((0, helper_1.getRandomArbitrary)(2, 5));
                             player.percent += increment;
-                            if (player.percent > 1000)
-                                player.percent = 1000;
-                            this.io.emit(player.name, player);
+                            if (player.percent > 1101) {
+                                player.percent = 1101;
+                            }
                         }
+                        this.io.emit(player.name, player);
                     });
-                    console.log("Current Player States:", this.player);
-                    if (this.player.every((p) => p.percent >= 1000)) {
+                    if (this.player.every((p) => p.percent >= 1101)) {
                         clearInterval(this.racing);
                         this.isRacing = false;
                         this.state = "rewarding"; // Transition to the rewarding state
                         resolve(); // Resolve the promise to move to the reward phase
                     }
-                }, 21); // Update every half second
+                }, 100); // Update every half second
             });
         });
     }
     // this function will run after the race, reward users who bet correctly
     reward(winner) {
         return __awaiter(this, void 0, void 0, function* () {
+            this.io.emit('rewardStart', this.state);
             console.log(`Rewarding phase. Winner is Player ${winner.name}`);
             this.player.forEach(player => player.percent = 0); // Reset player percentages
             // Example reward logic
             console.log(`Rewards distributed based on bets on Player ${winner.name}`);
             this.io.emit(this.state, `Rewards distributed based on bets on Player ${winner.name}`);
-            return new Promise((resolve, reject) => {
+            return yield new Promise((resolve, reject) => {
                 this.state = "betting"; // Transition to the rewarding state
+                this.io.emit('bettingStart', this.state);
                 resolve();
             });
             // setTimeout(() => {
@@ -138,8 +154,12 @@ class App {
     // this function will find the winner of the match
     getWinner() {
         // Randomly determine winner
-        const winner = Math.round((0, helper_1.getRandomArbitrary)(0, this.player.length - 1));
+        let winner = Math.round((0, helper_1.getRandomArbitrary)(0, this.player.length - 1));
+        while (this.nitro.includes(winner)) {
+            winner = Math.round((0, helper_1.getRandomArbitrary)(0, this.player.length - 1));
+        }
         console.log(`Winner determined: Player ${winner + 1}`);
+        this.nitro.push(winner);
         return this.player[winner];
     }
 }

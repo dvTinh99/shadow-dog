@@ -58,10 +58,8 @@
       </div>
 </template>
 <style scope>
-
-
 .chat-box {
-  height: 45%;
+  height: 70%;
   width: 100%;
   bottom: 0;
 }
