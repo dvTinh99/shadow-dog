@@ -12,8 +12,6 @@ const io = new Server(server, {
     
 });
 
-import {test} from './script.js'
-
 import App from './src/app.js'
 
 

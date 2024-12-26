@@ -36,3 +36,10 @@ export default  [
         btnType : 'danger'
     },
 ]
+
+export type TAnimal = {
+    id : number
+    name : string
+    image : string
+    btnType : string
+}
