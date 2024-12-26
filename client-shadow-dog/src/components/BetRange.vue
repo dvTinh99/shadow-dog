@@ -10,7 +10,7 @@
       <input type="range" class="form-range" id="customRange1" v-model="amount" step="5000" min="5000" max="50000000"/>
     </div>
     <div class="d-flex" style="width: 20%; justify-content: center; align-items: center;">
-      <button type="button" class="btn btn-dark" @click="bet">bet</button>
+      <button type="button" class="btn btn-dark" @click="bet(props.animalId)">bet</button>
     </div>
   </div>
 </template>
@@ -21,14 +21,16 @@ import { useAccountStore } from "@/stores/useAccountStore";
 const amount = ref<string>('5000')
 const accountStore = useAccountStore(); 
 
+type Prop = {
+  srcImage : string,
+  animalId : number
+}
 
-const props = defineProps({
-    srcImage : String
-})
+const props = defineProps<Prop>()
 
 
 
-const bet = () => {
-  accountStore.bet(parseInt(amount.value))
+const bet = (animalId : number) => {
+  accountStore.bet(animalId, parseInt(amount.value))
 }
 </script>

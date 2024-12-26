@@ -1,15 +1,11 @@
 <template>
     <div class="info-bet" >
-        <bet-total src-image="/src/assets/images/bet/deer.png" type="danger"/>
-        <bet-total src-image="/src/assets/images/bet/bear.png" type="secondary"/>
-        <bet-total src-image="/src/assets/images/bet/hippo.png" type="success"/>
-        <bet-total src-image="/src/assets/images/bet/giraffe.png" type="warning"/>
-        <bet-total src-image="/src/assets/images/bet/elephant.png" type="info"/>
-        <bet-total src-image="/src/assets/images/bet/zebra.png" type="dark"/>
+        <bet-total :src-image="animal.image" :type="animal.btnType" v-for="animal in animals"/>
     </div>
 </template>
 <script lang="ts" setup>
 import BetTotal from '@/components/BetTotal.vue';
+import animals from "@/config/animal"
 </script>
 <style scope>
 

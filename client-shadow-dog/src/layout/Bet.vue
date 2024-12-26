@@ -1,21 +1,14 @@
 <template>
       <div id="bet2">
-        <bet-range src-image="/src/assets/images/bet/deer.png"/>
-        <hr>
-        <bet-range src-image="/src/assets/images/bet/bear.png"/>
-        <hr>
-        <bet-range src-image="/src/assets/images/bet/hippo.png"/>
-        <hr>
-        <bet-range src-image="/src/assets/images/bet/giraffe.png"/>
-        <hr>
-        <bet-range src-image="/src/assets/images/bet/elephant.png"/>
-        <hr>
-        <bet-range src-image="/src/assets/images/bet/zebra.png"/>
+        <div>
+          <bet-range :src-image="animal.image" :animal-id="animal.id" v-for="animal in animals"/>
+          <hr>
+        </div>
       </div>
 </template>
 <script lang="ts" setup>
 import BetRange from '@/components/BetRange.vue';
-
+import animals from "@/config/animal"
 </script>
 <style scope>
 
