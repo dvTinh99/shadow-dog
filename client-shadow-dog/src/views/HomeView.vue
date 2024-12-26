@@ -33,7 +33,10 @@
         </div>
       
       <div v-if="tab === 'bet'">
+        <AccountInfo />
+        <hr>
         <info-bet />
+        <hr>
         <bet/>
       </div>
       <div v-if="tab === 'chat'" style="height: 70%;">
@@ -42,51 +45,6 @@
 
   </div>
 </template>
-<style scoped>
-
-
-@media only screen and (max-width: 768px) {
-    .home {
-        width: 100%;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .home {
-        width: 30%;
-    }
-}
-
-.home {
-  height: 100%;
-  background-color: burlywood;
-}
-
-/* #bet, #chat {
-    display: block;
-} */
-
-.canvas-holder {
-  position: relative;
-  top: 0;
-  left: 0;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#canvas1 {
-  width: 100%;
-  height: 20%;
-  max-width: 100%;
-  max-height: auto;
-}
-
-</style>
 <script setup lang="ts">
 import { useTemplateRef, ref, onMounted } from "vue";
 import Game from "@/entity/Game";
@@ -96,6 +54,7 @@ import Player from "@/entity/Player";
 import ChatBox from "@/layout/ChatBox.vue";
 import InfoBet from "@/layout/InfoBet.vue";
 import Bet from "@/layout/Bet.vue";
+import AccountInfo from "@/layout/AccountInfo.vue";
 const canvas = useTemplateRef<any>("canvas");
 let lastTime = 0;
 let game : Game = null;
@@ -228,3 +187,49 @@ function animate(timeStamp) {
   
 }
 </script>
+<style scoped>
+
+
+@media only screen and (max-width: 768px) {
+    .home {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .home {
+        width: 30%;
+    }
+}
+
+.home {
+  height: 100%;
+  background-color: burlywood;
+}
+
+/* #bet, #chat {
+    display: block;
+} */
+
+.canvas-holder {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#canvas1 {
+  width: 100%;
+  height: 20%;
+  max-width: 100%;
+  max-height: auto;
+}
+
+</style>
+
