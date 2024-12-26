@@ -10,16 +10,27 @@
       <input type="range" class="form-range" id="customRange1" v-model="amount" step="5000" min="5000" max="50000000"/>
     </div>
     <div class="d-flex" style="width: 20%; justify-content: center; align-items: center;">
-      <button type="button" class="btn btn-dark">bet</button>
+      <button type="button" class="btn btn-dark" @click="bet">bet</button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
+import { useAccountStore } from "@/stores/useAccountStore";
+import {toastError, toastSuccess} from "@/composable/useToast"
+
+const amount = ref<string>('5000')
+const accountStore = useAccountStore(); 
+
 
 const props = defineProps({
     srcImage : String
 })
 
-const amount = ref<string>('5000')
+
+
+const bet = () => {
+  const rs = accountStore.bet(parseInt(amount.value))
+  rs ? toastSuccess('bet thành công') : toastError('bet không thành công')
+}
 </script>
