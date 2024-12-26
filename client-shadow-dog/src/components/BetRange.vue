@@ -17,7 +17,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useAccountStore } from "@/stores/useAccountStore";
-import {toastError, toastSuccess} from "@/composable/useToast"
 
 const amount = ref<string>('5000')
 const accountStore = useAccountStore(); 
@@ -30,7 +29,6 @@ const props = defineProps({
 
 
 const bet = () => {
-  const rs = accountStore.bet(parseInt(amount.value))
-  rs ? toastSuccess('bet thành công') : toastError('bet không thành công')
+  accountStore.bet(parseInt(amount.value))
 }
 </script>
